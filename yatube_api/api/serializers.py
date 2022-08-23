@@ -15,11 +15,13 @@ class PostsSerializer(serializers.ModelSerializer):
 
 class CommentsSerializer(serializers.ModelSerializer):
     author = serializers.SlugRelatedField(
-        read_only=True, slug_field="username")
+        read_only=True,
+        slug_field="username")
 
     class Meta:
         fields = "__all__"
         model = Comment
+        read_only_fields = ('post',)
 
 
 class GroupsSerializer(serializers.ModelSerializer):

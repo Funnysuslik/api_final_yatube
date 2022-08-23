@@ -1,7 +1,7 @@
 from rest_framework import permissions
 
 
-class IsAuthorOrReadOnly(permissions.BasePermission):
+class IsAuthenticatedAuthorOrReadOnly(permissions.BasePermission):
     """
     Разрешение, основное на сверке пользователя
      и сверки автора запрашиваемого объекта
@@ -11,20 +11,14 @@ class IsAuthorOrReadOnly(permissions.BasePermission):
 
     def has_object_permission(self, request, view, obj):
 
-        if request.method in permissions.SAFE_METHODS:
+        return (
+            (request.method in permissions.SAFE_METHODS)
+            or obj.author == request.user
+        )
 
-            return True
+    def has_permission(self, request, view):
 
-        return obj.author == request.user
-
-
-class IsAuthenticatedOrReadOnly(permissions.BasePermission):
-    """Allows only to read if anonym."""
-
-    def has_object_permission(self, request, view, obj):
-
-        if request.method in permissions.SAFE_METHODS:
-
-            return True
-
-        return request.user.is_authenticated
+        return (
+            (request.method in permissions.SAFE_METHODS)
+            or request.user.is_authenticated
+        )
