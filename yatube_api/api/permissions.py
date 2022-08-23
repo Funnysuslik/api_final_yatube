@@ -3,8 +3,7 @@ from rest_framework import permissions
 
 class IsAuthenticatedAuthorOrReadOnly(permissions.BasePermission):
     """
-    Разрешение, основное на сверке пользователя
-     и сверки автора запрашиваемого объекта
+    Permission to do something other then GET for authors only.
     """
 
     message = "Do not touch what is not yours"

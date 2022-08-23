@@ -5,6 +5,7 @@ from posts.models import Comment, Post, Group, Follow, User
 
 
 class PostsSerializer(serializers.ModelSerializer):
+    """Serializer for Post model."""
     author = serializers.SlugRelatedField(
         slug_field="username", read_only=True)
 
@@ -14,6 +15,7 @@ class PostsSerializer(serializers.ModelSerializer):
 
 
 class CommentsSerializer(serializers.ModelSerializer):
+    """Serializer for Comment model."""
     author = serializers.SlugRelatedField(
         read_only=True,
         slug_field="username")
@@ -25,12 +27,15 @@ class CommentsSerializer(serializers.ModelSerializer):
 
 
 class GroupsSerializer(serializers.ModelSerializer):
+    """Serializer for Group model."""
+
     class Meta:
         model = Group
         fields = ("id", "title", "description")
 
 
 class FollowsSerializer(serializers.ModelSerializer):
+    """Serializer for Follow model."""
     user = serializers.SlugRelatedField(
         slug_field="username",
         read_only=True,
@@ -47,6 +52,7 @@ class FollowsSerializer(serializers.ModelSerializer):
                                               fields=['user', 'following'])]
 
     def validate(self, data):
+        """Validates if user trying to follow himself."""
         if self.context['request'].user == data['following']:
             raise serializers.ValidationError(
                 'You can not follow yourself')

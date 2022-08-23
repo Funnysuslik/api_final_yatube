@@ -14,6 +14,7 @@ from .serializers import (
 
 
 class PostsViewSet(viewsets.ModelViewSet):
+    """ViewSet for Post model."""
     queryset = Post.objects.all()
     serializer_class = PostsSerializer
     permission_classes = [IsAuthenticatedAuthorOrReadOnly]
@@ -24,6 +25,7 @@ class PostsViewSet(viewsets.ModelViewSet):
 
 
 class CommentsViewSet(viewsets.ModelViewSet):
+    """ViewSet for Comment model."""
     queryset = Comment.objects.all()
     serializer_class = CommentsSerializer
     permission_classes = [IsAuthenticatedAuthorOrReadOnly]
@@ -41,6 +43,7 @@ class CommentsViewSet(viewsets.ModelViewSet):
 
 
 class GroupsViewSet(viewsets.ReadOnlyModelViewSet):
+    """ViewSet for Group model."""
     queryset = Group.objects.all()
     serializer_class = GroupsSerializer
     permission_classes = [
@@ -49,6 +52,7 @@ class GroupsViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class FollowsViewSet(viewsets.ModelViewSet):
+    """ViewSet for Follow model."""
     serializer_class = FollowsSerializer
     permission_classes = [IsAuthenticated]
     filter_backends = (filters.SearchFilter,)
