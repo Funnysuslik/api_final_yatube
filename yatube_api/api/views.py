@@ -2,6 +2,7 @@ from django.shortcuts import get_object_or_404
 from rest_framework import viewsets, filters
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.pagination import LimitOffsetPagination
+from rest_framework import mixins
 
 from posts.models import Post, Comment, Group
 from .permissions import IsAuthenticatedAuthorOrReadOnly
@@ -51,7 +52,9 @@ class GroupsViewSet(viewsets.ReadOnlyModelViewSet):
     ]
 
 
-class FollowsViewSet(viewsets.ModelViewSet):
+class FollowsViewSet(mixins.CreateModelMixin,
+                     mixins.ListModelMixin,
+                     viewsets.GenericViewSet):
     """ViewSet for Follow model."""
     serializer_class = FollowsSerializer
     permission_classes = [IsAuthenticated]
